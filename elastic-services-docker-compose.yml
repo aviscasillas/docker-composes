@@ -1,0 +1,22 @@
+version: "3"
+services:
+  elasticsearch:
+    image: elasticsearch:7.12.0
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - elastic-services
+    environment:
+      - "discovery.type=single-node"
+  kibana:
+    image: kibana:7.12.0
+    ports:
+      - "5601:5601"
+    networks:
+      - es-client
+    depends_on:
+      - elasticsearch
+
+networks:
+  elastic-services:
